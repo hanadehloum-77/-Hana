@@ -1,0 +1,523 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hana's Secret Royal Letter</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 24px 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #f8e8d0;
+    font-family: "Cormorant Garamond", serif;
+    background: linear-gradient(#190711dd, #32101fe8);
+}
+
+main {
+    width: 100%;
+    max-width: 620px;
+    text-align: center;
+}
+
+h1 {
+    font-family: "Great Vibes", cursive;
+    font-size: 52px;
+    color: #e8c982;
+    font-weight: 400;
+}
+
+h2 {
+    color: #e8c982;
+    font-size: 28px;
+}
+
+p {
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.panel {
+    display: none;
+    padding: 30px 22px;
+    margin-top: 24px;
+    background: #310d1d;
+    border: 1px solid #c9a45c;
+    box-shadow: 0 15px 45px #0008;
+}
+
+.panel.show {
+    display: block;
+}
+
+.ornament {
+    color: #d7b56d;
+    letter-spacing: 7px;
+    font-size: 24px;
+}
+
+.signature {
+    font-family: "Great Vibes", cursive;
+    color: #e8c982;
+    font-size: 38px;
+}
+
+.envelope-area {
+    width: 280px;
+    max-width: 100%;
+    height: 200px;
+    margin: 30px auto;
+    cursor: pointer;
+}
+
+.envelope {
+    height: 175px;
+    margin-top: 20px;
+    position: relative;
+    background: #e9d8b7;
+    border: 2px solid #c9a45c;
+}
+
+.flap {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 65%;
+    background: #f4e8d1;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top;
+    transition: transform 0.8s;
+    z-index: 3;
+}
+
+.envelope.open .flap {
+    transform: rotateX(180deg);
+}
+
+.envelope-label {
+    position: absolute;
+    top: 25px;
+    width: 100%;
+    color: #582037;
+    font-size: 22px;
+    z-index: 4;
+}
+
+.seal {
+    position: absolute;
+    top: 57%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #76152f;
+    border: 2px solid #e5c77e;
+    display: grid;
+    place-items: center;
+    color: #f5dda0;
+    font-size: 30px;
+    z-index: 5;
+}
+
+button {
+    font-family: inherit;
+    font-size: 19px;
+    padding: 12px 20px;
+    margin: 6px;
+    cursor: pointer;
+    border: 1px solid #d6b46b;
+    background: #6f1834;
+    color: #fff0d0;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+.options button {
+    margin: 0;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #c9a45c;
+    background: #fff8ec;
+    color: #351020;
+    font-family: inherit;
+    font-size: 18px;
+}
+
+textarea {
+    min-height: 110px;
+}
+
+@media (max-width: 430px) {
+    .options {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+<main>
+  
+    <!-- ENVELOPE -->
+    <section class="panel show" id="envelopeScreen">
+
+        <div class="ornament">✦ ❦ ✦</div>
+
+        <h1>Hana's Secret Letter</h1>
+
+        <p>
+            A mysterious letter awaits its worthy guest.
+        </p>
+
+        <div class="envelope-area" id="envelopeArea">
+
+            <div class="envelope" id="envelope">
+
+                <div class="flap"></div>
+
+                <div class="envelope-label">
+                    To a curious visitor...
+                </div>
+
+                <div class="seal">♕</div>
+
+            </div>
+
+        </div>
+
+        <p>Tap the royal seal to open the letter.</p>
+
+        <div class="ornament">❦</div>
+
+    </section>
+
+
+    <!-- WELCOME -->
+
+    <section class="panel" id="welcomePanel">
+
+        <div class="ornament">✦ ❦ ✦</div>
+
+        <h1>Welcome, Dear Guest</h1>
+
+        <p>
+            Hello, I'm Hana.
+        </p>
+
+        <p>
+            Welcome to my little world, dear guest.
+            How may I be of service to you today?
+        </p>
+
+        <p>
+            Before you enter my private world,
+            allow me to ask you four little questions.
+        </p>
+
+        <div class="signature">Hana</div>
+
+        <button id="beginButton">
+            Begin the Royal Questions
+        </button>
+
+    </section>
+
+
+    <!-- QUIZ -->
+
+    <section class="panel" id="quizPanel">
+
+        <div class="ornament">❦ ✦ ❦</div>
+
+        <p id="progressText">
+            Question 1 of 4
+        </p>
+
+        <h2 id="questionText"></h2>
+
+        <div class="options" id="options"></div>
+
+        <p id="feedback"></p>
+
+    </section>
+
+
+    <!-- ACCESS DENIED -->
+
+    <section class="panel" id="deniedPanel">
+
+        <div class="ornament">♕ ✧ ♕</div>
+
+        <h1>Access Denied</h1>
+
+        <p>
+            Hmm… don't you have something more important
+            to do than keeping tabs on me?
+        </p>
+
+        <p>
+            This private correspondence is not for you.
+        </p>
+
+        <div class="signature">The Queen</div>
+
+        <button id="retryButton">
+            Return to the Beginning
+        </button>
+
+    </section>
+
+
+    <!-- SUCCESS -->
+
+    <section class="panel" id="successPanel">
+
+        <div class="ornament">✦ ❦ ✦</div>
+
+        <h1>Welcome to My Inner Circle</h1>
+
+        <p>
+            Splendid! You have proven your knowledge
+            of Her Majesty.
+        </p>
+
+        <p>
+            You may now leave a private message for Hana.
+        </p>
+
+        <form id="messageForm">
+
+            <input
+                type="text"
+                id="guestName"
+                placeholder="Your name"
+                required
+            >
+
+            <input
+                type="email"
+                id="guestEmail"
+                placeholder="Your email (optional)"
+            >
+
+            <textarea
+                id="guestMessage"
+                placeholder="Write your message to Hana..."
+                required
+            ></textarea>
+
+            <button type="submit">
+                Seal and Send the Letter
+            </button>
+
+        </form>
+
+        <p id="formFeedback"></p>
+
+        <div class="signature">
+            With elegance, Hana
+        </div>
+
+    </section>
+  
+<script>
+const envelope = document.getElementById("envelope");
+const envelopeScreen = document.getElementById("envelopeScreen");
+const welcomePanel = document.getElementById("welcomePanel");
+const quizPanel = document.getElementById("quizPanel");
+const deniedPanel = document.getElementById("deniedPanel");
+const successPanel = document.getElementById("successPanel");
+
+const beginButton = document.getElementById("beginButton");
+const progressText = document.getElementById("progressText");
+const questionText = document.getElementById("questionText");
+const optionsContainer = document.getElementById("options");
+const feedback = document.getElementById("feedback");
+const retryButton = document.getElementById("retryButton");
+
+let currentQuestion = 0;
+
+const questions = [
+    {
+        question: "What is my zodiac sign?",
+        options: ["Aries ♈", "Leo ♌", "Libra ♎", "Taurus ♉"],
+        answer: "Leo ♌"
+    },
+    {
+        question: "What is my favorite perfume?",
+        options: [
+            "Le Monde Sur Mesure",
+            "Chanel N°5",
+            "Dior Sauvage",
+            "Oud"
+        ],
+        answer: "Le Monde Sur Mesure"
+    },
+    {
+        question: "What is my favorite color?",
+        options: [
+            "Emerald Green",
+            "Royal Blue",
+            "Burgundy",
+            "Rose Gold"
+        ],
+        answer: "Royal Blue"
+    },
+    {
+        question: "What is my favorite gemstone?",
+        options: [
+            "Blue Diamond",
+            "Pink Diamond",
+            "Musgravite",
+            "Black Opal"
+        ],
+        answer: "Blue Diamond"
+    }
+];
+
+function showPanel(panel) {
+    [
+        envelopeScreen,
+        welcomePanel,
+        quizPanel,
+        deniedPanel,
+        successPanel
+    ].forEach(item => item.classList.remove("show"));
+
+    panel.classList.add("show");
+}
+
+function openEnvelope() {
+    if (envelope.classList.contains("opened")) return;
+
+    envelope.classList.add("opened");
+
+    setTimeout(() => {
+        showPanel(welcomePanel);
+    }, 700);
+}
+
+envelope.addEventListener("click", openEnvelope);
+
+envelope.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openEnvelope();
+    }
+});
+
+beginButton.addEventListener("click", () => {
+    currentQuestion = 0;
+    showPanel(quizPanel);
+    displayQuestion();
+});
+
+function displayQuestion() {
+    const item = questions[currentQuestion];
+
+    progressText.textContent =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    questionText.textContent = item.question;
+    optionsContainer.innerHTML = "";
+    feedback.textContent = "";
+
+    item.options.forEach(option => {
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "option";
+        button.textContent = option;
+
+        button.addEventListener("click", () => {
+            checkAnswer(option);
+        });
+
+        optionsContainer.appendChild(button);
+    });
+}
+
+function checkAnswer(selectedAnswer) {
+    const correctAnswer = questions[currentQuestion].answer;
+
+    if (selectedAnswer !== correctAnswer) {
+        showPanel(deniedPanel);
+        return;
+    }
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+        displayQuestion();
+    } else {
+        showPanel(successPanel);
+    }
+}
+
+retryButton.addEventListener("click", () => {
+    currentQuestion = 0;
+    envelope.classList.remove("opened");
+    showPanel(envelopeScreen);
+});
+
+const messageForm = document.getElementById("messageForm");
+const guestName = document.getElementById("guestName");
+const guestEmail = document.getElementById("guestEmail");
+const guestMessage = document.getElementById("guestMessage");
+const formFeedback = document.getElementById("formFeedback");
+
+messageForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const recipient = "YOUR_EMAIL@example.com";
+
+    if (recipient === "YOUR_EMAIL@example.com") {
+        formFeedback.textContent =
+            "Please add Hana's email address in the code before sending.";
+        return;
+    }
+
+    const subject = encodeURIComponent(
+        "A Letter for Hana from " + guestName.value
+    );
+
+    const body = encodeURIComponent(
+        "Dear Hana,\n\n" +
+        guestMessage.value +
+        "\n\nFrom: " + guestName.value +
+        "\nGuest email: " + (guestEmail.value || "Not provided")
+    );
+
+    window.location.href =
+        `mailto:${recipient}?subject=${subject}&body=${body}`;
+
+    formFeedback.textContent =
+        "Your email app should open with your letter ready.";
+});
+</script>
+
+</main>
+</body>
+</html>
+
+
